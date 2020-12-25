@@ -31,8 +31,8 @@ complete_install() {
 }
 
 change_shell() {
-    chsh -s /usr/bin/zsh
-    chsh -s /usr/bin/zsh $username
+    sudo chsh -s /usr/bin/zsh
+    sudo chsh -s /usr/bin/zsh $username
 }
 
 install_pacman_packages() {
