@@ -39,7 +39,7 @@ install_pacman_packages() {
     for package in $(cat packages.pacman); 
     do
         echo "installing \"$package\"..."
-        install_pacman_package($package)
+        install_pacman_package $package
         if [ $? -eq 0 ]; then
             echo "installed \"$package\""
         else
@@ -69,7 +69,7 @@ install_aur_packages() {
     for package in $(cat packages.aur); 
     do
         echo "installing \"$package\"..."
-        install_aur_package($package)
+        install_aur_package $package
         if [ $? -eq 0 ]; then
             echo "installed \"$package\""
         else
@@ -84,7 +84,7 @@ install_suckless_packages() {
     do 
         echo "installing \"$package\"..."
         if [ -d $HOME/.config/$package ]; then
-            install_suckless_package($package)
+            install_suckless_package $package
             echo "installed \"$package\""
         else
             echo "failed to install \"$package\""
