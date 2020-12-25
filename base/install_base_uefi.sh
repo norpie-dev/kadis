@@ -33,6 +33,7 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk $TARGET_DEVICE
       # confirm first sector
       # confirm last sector
     y # confirm removal of signature
+    y # random removal sometimes
     w # save
 EOF
 
