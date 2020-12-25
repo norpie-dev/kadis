@@ -27,6 +27,7 @@ complete_install() {
     install_yay
     install_aur_packages
     install_suckless_packages
+    activate_runit
     change_perms
 }
 
@@ -91,6 +92,11 @@ install_suckless_packages() {
         fi
     done
     cd $KADIS_DIR
+}
+
+activate_runit() {
+    sudo ln -s /etc/runit/sv/ntpd/ /run/runit/service/
+    sudo ln -s /etc/runit/sv/sshd/ /run/runit/service/
 }
 
 change_perms() {

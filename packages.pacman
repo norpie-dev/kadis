@@ -4,6 +4,8 @@ nitrogen
 ntfs-3g
 ntp
 ntp-runit
+openssh
+openssh-runit
 pamixer
 pulseaudio
 python
