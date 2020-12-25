@@ -51,7 +51,7 @@ install_pacman_packages() {
 install_dots() {
     cd $HOME
     git clone --bare "$DOTS_GIT_REPO" "$HOME/.dots"
-    git checkout --git-dir=$DOTS_GIT_REPO --word-tree=$HOME
+    git checkout --git-dir=$HOME/.dots --word-tree=$HOME
     cd $KADIS_DIR
 }
 
