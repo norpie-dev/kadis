@@ -2,8 +2,7 @@
 
 echo "Enter your drive devices without '/dev/' (eg. sda): "
 read 
-TARGET=${REPLY}
-TARGET_DEVICE="/dev/$TARGET"
+TARGET=${REPLY} TARGET_DEVICE="/dev/$TARGET"
 
 # Partitioning of the disk
 # to create the partitions programatically (rather than manually)
@@ -38,7 +37,7 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk $TARGET_DEVICE
 EOF
 
 # Format Partitions
-for partition in $(lsblk --raw | grep "part" | grep "$TARGET" | awk '{print $1}' | sort -r); do
+for partition in $(lsblk --raw | grep "part" | grep "$TARGET" | awk '{print $1}' | sort); do
     partition_number="${partition: -1}"
     if [ $partition_number -eq 1 ];then
         mkfs.fat -F32 /dev/$partition
@@ -48,7 +47,7 @@ for partition in $(lsblk --raw | grep "part" | grep "$TARGET" | awk '{print $1}'
 done
 
 # Mount Partitions
-for partition in $(lsblk --raw | grep "part" | grep "$TARGET" | awk '{print $1}' | sort); do
+for partition in $(lsblk --raw | grep "part" | grep "$TARGET" | awk '{print $1}' | sort -r); do
     partition_number="${partition: -1}"
     if [ $partition_number -eq 3 ]; then
         mount /dev/$partition /mnt
@@ -68,4 +67,4 @@ basestrap /mnt base base-devel runit elogind-runit linux linux-firmware
 fstabgen =U /mnt >> /mnt/etc/fstab
 
 # Enter chroot
-artix-chroot /mnt
+artools-chroot /mnt
