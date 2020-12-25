@@ -32,9 +32,6 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk $TARGET_DEVICE
       # confirm first sector
       # confirm last sector
     y # confirm removal of signature
-    y # random removal ext4 1 sometimes
-    y # random removal ext4 2 sometimes
-    y # random removal ext4 3 sometimes
     w # save
 EOF
 
@@ -44,7 +41,7 @@ for partition in $(lsblk --raw | grep "part" | grep "$TARGET" | awk '{print $1}'
     if [ $partition_number -eq 1 ];then
         mkfs.fat -F32 /dev/$partition
     else
-        mkfs.ext4 /dev/$partition
+        mkfs.ext4 -F /dev/$partition
     fi
 done
 
