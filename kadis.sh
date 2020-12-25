@@ -19,7 +19,7 @@ install_suckless_package() {
 complete_install() {
     echo "Enter your username: "
     read
-    $username=${REPLY}
+    username=${REPLY}
     export HOME=/home/$username
     install_pacman_packages
     install_dots 
