@@ -32,7 +32,9 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk $TARGET_DEVICE
       # confirm first sector
       # confirm last sector
     y # confirm removal of signature
-    y # random removal sometimes
+    y # random removal ext4 1 sometimes
+    y # random removal ext4 2 sometimes
+    y # random removal ext4 3 sometimes
     w # save
 EOF
 
@@ -64,7 +66,7 @@ done
 basestrap /mnt base base-devel runit elogind-runit linux linux-firmware
 
 # Generate fstab
-fstabgen =U /mnt >> /mnt/etc/fstab
+fstabgen -U /mnt >> /mnt/etc/fstab
 
 # Enter chroot
 artools-chroot /mnt
