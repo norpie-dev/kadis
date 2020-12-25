@@ -4,7 +4,7 @@ DOTS_GIT_REPO="https://github.com/norpie-dev/dots"
 KADIS_DIR=$(pwd)
 
 install_pacman_package() {
-    pacman -S --noconfirm --needed $1 > /dev/null 2>&1
+    sudo pacman -S --noconfirm --needed $1 > /dev/null 2>&1
 }
 
 install_aur_package() {
