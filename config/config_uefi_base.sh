@@ -75,5 +75,5 @@ system_clock
 localisation
 boot_loader
 make_user
-install_packages
+install_network_packages
 network_config
