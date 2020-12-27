@@ -37,7 +37,7 @@ change_shell() {
 }
 
 install_pacman_packages() {
-    for package in $(cat packages.pacman); 
+    for package in $(cat step3.pacman); 
     do
         echo "installing \"$package\"..."
         install_pacman_package $package
@@ -67,7 +67,7 @@ install_yay() {
 }
 
 install_aur_packages() {
-    for package in $(cat packages.aur); 
+    for package in $(cat step3.aur); 
     do
         echo "installing \"$package\"..."
         install_aur_package $package
@@ -81,7 +81,7 @@ install_aur_packages() {
 
 install_suckless_packages() {
     # This excpects the packages to be located in $HOME/.config
-    for package in $(cat packages.suckless);
+    for package in $(cat step3.suckless);
     do 
         echo "installing \"$package\"..."
         if [ -d $HOME/.config/$package ]; then
