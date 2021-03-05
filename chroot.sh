@@ -1,7 +1,7 @@
 #!/bin/sh
 
 install_network_packages() {
-    for package in $(cat step2.pacman); 
+    for package in $(cat network.pacman); 
     do
         echo "installing \"$package\"..."
         install_pacman_package $package

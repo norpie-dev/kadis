@@ -1,6 +1,7 @@
 #!/bin/sh
 
 DOTS_GIT_REPO="https://github.com/norpie-dev/dots"
+SUCKLESS_GIT_REPO="https://github.com/norpie-dev"
 KADIS_DIR=$(pwd)
 
 install_pacman_package() {
@@ -12,6 +13,7 @@ install_aur_package() {
 }
 
 install_suckless_package() {
+    git clone "$SUCKLESS_GIT_REPO/$1" $HOME/.config/$1
     cd $HOME/.config/$1
     make clean install > /dev/null 2>&1
 }
@@ -37,7 +39,7 @@ change_shell() {
 }
 
 install_pacman_packages() {
-    for package in $(cat step3.pacman); 
+    for package in $(cat regular.pacman); 
     do
         echo "installing \"$package\"..."
         install_pacman_package $package
@@ -67,7 +69,7 @@ install_yay() {
 }
 
 install_aur_packages() {
-    for package in $(cat step3.aur); 
+    for package in $(cat regular.aur); 
     do
         echo "installing \"$package\"..."
         install_aur_package $package
@@ -81,7 +83,7 @@ install_aur_packages() {
 
 install_suckless_packages() {
     # This excpects the packages to be located in $HOME/.config
-    for package in $(cat step3.suckless);
+    for package in $(cat suckless.github);
     do 
         echo "installing \"$package\"..."
         if [ -d $HOME/.config/$package ]; then
