@@ -1,2 +1,2 @@
-# NADIS
-Norpie's Auto Dot-file Installing Script
+# NABS
+Norpie's Auto Bootstrapping Script
