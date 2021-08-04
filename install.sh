@@ -64,4 +64,8 @@ chrooting() {
     arch-chroot /mnt "./chroot.sh"
 }
 
-selecting && partition && formatting && mounting && basing && fstabing && chrooting
+unmounting() {
+    umount /mnt -R
+}
+
+selecting && partition && formatting && mounting && basing && fstabing && chrooting && unmounting

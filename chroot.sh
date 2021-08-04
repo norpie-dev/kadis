@@ -71,4 +71,4 @@ localization &&
 network_configuration &&
 boot_loader &&
 microcode_updates &&
-user_setup
+user_setup && exit
