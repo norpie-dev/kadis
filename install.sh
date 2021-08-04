@@ -54,7 +54,7 @@ basing() {
 
 fstabing() {
     # Generate fstab
-    fstabgen -U /mnt >> /mnt/etc/fstab
+    genfstab -U /mnt >> /mnt/etc/fstab
 }
 
 chrooting() {
