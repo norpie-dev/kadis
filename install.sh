@@ -34,7 +34,7 @@ partition() {
 EOF
 }
 
-formating() {
+formatting() {
     # Format Partitions
     mkfs.vfat -F32 "$TARGET_DEVICE"1
     mkfs.ext4 "$TARGET_DEVICE"2
