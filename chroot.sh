@@ -30,7 +30,7 @@ time_zone() {
 }
 
 localization() {
-    echo "$locale.UTF-8" >> /etc/locale.gen
+    echo "$locale.UTF-8 UTF-8" >> /etc/locale.gen
     locale-gen
     echo "LANG=$locale.UTF-8" >> /etc/locale.conf
 }
@@ -54,22 +54,21 @@ boot_loader() {
 
 microcode_updates() {
     if [[ $microcode == "amd" || $microcode == "intel" ]]; then
-        pacman -S "$microcode-ucode"
+        pacman -S "$microcode-ucode" --noconfirm
     fi
 }
 
 user_setup() {
-    mkdir -p /home/$username
     useradd -m $username
     echo "$username ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
     echo -e "$password\n$password" | passwd $username
     echo -e "$password\n$password" | passwd
 }
 
-package_update
-time_zone
-localization
-network_configuration
-boot_loader
-microcode_updates
+package_update &&
+time_zone &&
+localization &&
+network_configuration &&
+boot_loader &&
+microcode_updates &&
 user_setup
