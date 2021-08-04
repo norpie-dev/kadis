@@ -61,7 +61,7 @@ chrooting() {
     # Copy chroot nabs into the env
     cp chroot.sh /mnt/chroot.sh
     # Enter chroot
-    arch-chroot /mnt "chroot.sh"
+    arch-chroot /mnt "./chroot.sh"
 }
 
 selecting && partition && formatting && mounting && basing && fstabing && chrooting
