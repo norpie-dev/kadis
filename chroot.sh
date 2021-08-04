@@ -56,13 +56,30 @@ microcode_updates() {
     if [[ $microcode == "amd" || $microcode == "intel" ]]; then
         pacman -S "$microcode-ucode" --noconfirm
     fi
+} 
+
+default_packages() {
+    pacman -S --noconfirm zsh git
 }
 
 user_setup() {
-    useradd -m $username
+    useradd $username
     echo "$username ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
     echo -e "$password\n$password" | passwd $username
     echo -e "$password\n$password" | passwd
+    echo -e "/bin/zsh" | chsh $username
+    echo -e "/bin/zsh" | chsh
+    mkdir -p /home
+}
+
+setup_dots() {
+    cd /home
+    git clone https://github.com/norpie-dev/dots
+    mv dots $username
+    cd $username
+    mv ".git" ".dots"
+    cd ..
+    chown $username:$username $username -R
 }
 
 package_update &&
@@ -71,4 +88,7 @@ localization &&
 network_configuration &&
 boot_loader &&
 microcode_updates &&
-user_setup && exit
+default_packages &&
+user_setup &&
+setup_dots &&
+exit
