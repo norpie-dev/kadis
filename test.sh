@@ -7,5 +7,3 @@
 #     pi "The branch used for a raspberry pi" off 2>&1 1>&3)
 # clear
 # echo $result
-
-

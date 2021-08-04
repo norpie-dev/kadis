@@ -1,13 +1,24 @@
 #!/bin/sh
 
-region=
-city=
-locale=
-hostname=
-microcode_updates=
-microcode=
-username=
-password=
+get_input() {
+    echo "$1"
+    read
+    returnvalue=${REPLY}
+}
+
+get_input "Enter your region:"
+region=$returnvalue
+get_input "Enter your city:"
+city=$returnvalue
+get_input "Enter your locale:"
+locale=$returnvalue
+get_input "Enter your hostname:"
+hostname=$returnvalue
+microcode=$(cat /proc/cpuinfo | grep "model name" | uniq | awk '{print tolower($4)}')
+get_input "Enter your username:"
+username=$returnvalue
+get_input "Enter your password:"
+password=$returnvalue
 
 package_update() {
     pacman -Syu --noconfirm
@@ -42,15 +53,23 @@ boot_loader() {
 }
 
 microcode_updates() {
-    if [[ $has_microcode_updates ]]; then
+    if [[ $microcode == "amd" || $microcode == "intel" ]]; then
         pacman -S "$microcode-ucode"
     fi
 }
 
 user_setup() {
-    mkdir -p /home/konsta
+    mkdir -p /home/$username
     useradd -m $username
     echo "$username ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
     echo -e "$password\n$password" | passwd $username
     echo -e "$password\n$password" | passwd
 }
+
+package_update
+time_zone
+localization
+network_configuration
+boot_loader
+microcode_updates
+user_setup
