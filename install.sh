@@ -62,6 +62,8 @@ chrooting() {
     cp chroot.sh /mnt/chroot.sh
     # Enter chroot
     arch-chroot /mnt "./chroot.sh"
+    # Remove the chroot.sh file
+    rm /mnt/chroot.sh
 }
 
 unmounting() {
