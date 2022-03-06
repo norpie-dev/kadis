@@ -43,11 +43,12 @@ network_configuration() {
     echo "127.0.1.1 $hostname.localdomain $hostname" >> /etc/hosts
 
     pacman -S networkmanager --noconfirm
-    systemctl enable NetworkManager
+    systemctl enable --now NetworkManager
 }
 
 boot_loader() {
     pacman -S grub efibootmgr os-prober --noconfirm
+    echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
     grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
     grub-mkconfig -o /boot/grub/grub.cfg
 }
@@ -56,10 +57,11 @@ microcode_updates() {
     if [[ $microcode == "amd" || $microcode == "intel" ]]; then
         pacman -S "$microcode-ucode" --noconfirm
     fi
-} 
+}
 
 default_packages() {
-    pacman -S --noconfirm zsh git
+    pacman -S --noconfirm zsh git openssh
+    systemctl enable --now sshd
 }
 
 user_setup() {
