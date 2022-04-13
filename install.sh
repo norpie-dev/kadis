@@ -12,9 +12,11 @@ selecting() {
 }
 
 partition() {
-    [[ "$TARGET" == *"vd"* ]] && partition_virtual
-    [[ "$TARGET" == *"nvme"* ]] && partition_physical
-    [[ "$TARGET" == *"sd"* ]] && partition_physical
+    if [[ "$TARGET" == *"vd"* ]]; then
+        partition_virtual
+    else
+        partition_physical
+    fi
 }
 
 partition_physical() {
