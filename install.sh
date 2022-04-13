@@ -1,5 +1,9 @@
 #!/bin/sh
 
+prepare() {
+    sed 's/#ParallelDownloads\ =\ 5/ParallelDownloads\ =\ 15/g' /etc/pacman.conf -i
+}
+
 selecting() {
     echo "Enter your drive devices without '/dev/' (eg. sda): "
     read
@@ -102,4 +106,4 @@ unmounting() {
     umount /mnt -R
 }
 
-selecting && partition && formatting && mounting && basing && fstabing && chrooting && unmounting
+prepare && selecting && partition && formatting && mounting && basing && fstabing && chrooting && unmounting
