@@ -7,7 +7,14 @@ prepare() {
 selecting() {
     echo "Enter your drive devices without '/dev/' (eg. sda): "
     read
-    TARGET=${REPLY} TARGET_DEVICE="/dev/$TARGET"
+    TARGET=${REPLY}
+    TARGET_DEVICE="/dev/$TARGET"
+}
+
+partition() {
+    [[ "$TARGET" == *"vd"* ]] && partition_virtual
+    [[ "$TARGET" == *"nvme"* ]] && partition_physical
+    [[ "$TARGET" == *"sd"* ]] && partition_physical
 }
 
 partition_physical() {
