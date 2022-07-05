@@ -1,5 +1,24 @@
 #!/bin/sh
 
+get_input() {
+    echo "$1"
+    read
+    returnvalue=${REPLY}
+}
+
+get_input "Enter your region:"
+region=$returnvalue
+get_input "Enter your city:"
+city=$returnvalue
+get_input "Enter your locale:"
+locale=$returnvalue
+get_input "Enter your hostname:"
+hostname=$returnvalue
+get_input "Enter your username:"
+username=$returnvalue
+get_input "Enter your password:"
+password=$returnvalue
+
 prepare() {
     sed 's/#ParallelDownloads\ =\ 5/ParallelDownloads\ =\ 15/g' /etc/pacman.conf -i
 }
@@ -106,7 +125,7 @@ chrooting() {
     # Copy chroot nabs into the env
     cp chroot.sh /mnt/chroot.sh
     # Enter chroot
-    arch-chroot /mnt "./chroot.sh"
+    arch-chroot /mnt "./chroot.sh $region $city $locale $hostname $username $password"
     # Remove the chroot.sh file
     rm /mnt/chroot.sh
 }
