@@ -127,7 +127,7 @@ chrooting() {
     # Enter chroot
     arch-chroot /mnt ./chroot.sh $region $city $locale $hostname $username $password &&
     # Remove the chroot.sh file
-    rm /mnt/chroot.sh &&
+    rm /mnt/chroot.sh
 }
 
 unmounting() {
