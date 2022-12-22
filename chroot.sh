@@ -23,7 +23,7 @@ network_configuration() {
     echo "127.0.1.1 $4.localdomain $4" >> /etc/hosts
 
     pacman -S networkmanager --noconfirm
-    systemctl enable --now NetworkManager
+    systemctl enable NetworkManager
 }
 
 boot_loader() {
@@ -42,7 +42,7 @@ microcode_updates() {
 
 default_packages() {
     pacman -S --noconfirm zsh git openssh
-    systemctl enable --now sshd
+    systemctl enable sshd
 }
 
 user_setup() {
