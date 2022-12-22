@@ -123,11 +123,11 @@ fstabing() {
 
 chrooting() {
     # Copy chroot nabs into the env
-    cp chroot.sh /mnt/chroot.sh
+    cp chroot.sh /mnt/chroot.sh &&
     # Enter chroot
-    arch-chroot /mnt "./chroot.sh $region $city $locale $hostname $username $password"
+    arch-chroot /mnt ./chroot.sh $region $city $locale $hostname $username $password &&
     # Remove the chroot.sh file
-    rm /mnt/chroot.sh
+    rm /mnt/chroot.sh &&
 }
 
 unmounting() {
