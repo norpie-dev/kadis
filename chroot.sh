@@ -70,13 +70,13 @@ setup_dots() {
     chown $5:$5 $5 -R
 }
 
-package_update &&
-time_zone &&
-localization &&
-network_configuration &&
-boot_loader &&
-microcode_updates &&
-default_packages &&
+#package_update &&
+#time_zone &&
+#localization &&
+#network_configuration &&
+#boot_loader &&
+#microcode_updates &&
+#default_packages &&
 user_setup &&
 #setup_dots &&
 exit
