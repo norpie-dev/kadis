@@ -1,7 +1,5 @@
 #!/bin/sh
 
-echo $@
-
 region="$1"
 city="$2"
 locale="$3"
