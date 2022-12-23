@@ -2,6 +2,13 @@
 
 echo $@
 
+region="$1"
+city="$2"
+locale="$3"
+hostname="$4"
+username="$5"
+password="$6"
+
 package_update() {
     pacman -Syu --noconfirm
 }
@@ -12,17 +19,17 @@ time_zone() {
 }
 
 localization() {
-    echo "$3.UTF-8 UTF-8" >> /etc/locale.gen
+    echo "$1.UTF-8 UTF-8" >> /etc/locale.gen
     locale-gen
-    echo "LANG=$3.UTF-8" >> /etc/locale.conf
+    echo "LANG=$2.UTF-8" >> /etc/locale.conf
 }
 
 network_configuration() {
-    echo "$4" >> /etc/hostname
+    echo "$1" >> /etc/hostname
 
     echo "127.0.0.1 localhost" >> /etc/hosts
     echo "::1 localhost" >> /etc/hosts
-    echo "127.0.1.1 $4.localdomain $4" >> /etc/hosts
+    echo "127.0.1.1 $1.localdomain $1" >> /etc/hosts
 
     pacman -S networkmanager --noconfirm
     systemctl enable NetworkManager
@@ -49,13 +56,13 @@ default_packages() {
 }
 
 user_setup() {
-    echo $5 &&
-    echo $6 &&
-    useradd $5 &&
-    echo "$5 ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers &&
-    echo -e "$6\n$6" | passwd $5 &&
-    echo -e "$6\n$6" | passwd &&
-    echo -e "/bin/zsh" | chsh $5 &&
+    echo $1 &&
+    echo $2 &&
+    useradd $1 &&
+    echo "$1 ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers &&
+    echo -e "$2\n$2" | passwd $1 &&
+    echo -e "$2\n$2" | passwd &&
+    echo -e "/bin/zsh" | chsh $1 &&
     echo -e "/bin/zsh" | chsh &&
     mkdir -p /home
 }
@@ -63,20 +70,20 @@ user_setup() {
 setup_dots() {
     cd /home
     git clone https://github.com/norpie-dev/dots
-    mv dots $5
-    cd $5
+    mv dots $1
+    cd $1
     mv ".git" ".dots"
     cd ..
-    chown $5:$5 $5 -R
+    chown $1:$1 $1 -R
 }
 
-#package_update &&
-#time_zone &&
-#localization &&
-#network_configuration &&
-#boot_loader &&
-#microcode_updates &&
-#default_packages &&
-user_setup &&
-#setup_dots &&
+package_update &&
+time_zone $region $city &&
+localization $locale &&
+network_configuration $hostname &&
+boot_loader &&
+microcode_updates &&
+default_packages &&
+user_setup $username $password &&
+setup_dots &&
 exit
