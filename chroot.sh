@@ -50,6 +50,7 @@ microcode_updates() {
 
 default_packages() {
     pacman -S --noconfirm zsh git openssh
+    echo "ZDOTDIR=/home/norpie/.config/zsh" >> /etc/zsh/zshenv
     systemctl enable sshd
 }
 
