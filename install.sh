@@ -129,6 +129,7 @@ chrooting() {
     # Copy chroot nabs into the env
     cp chroot.sh /mnt/chroot.sh &&
     # Enter chroot
+    echo "$region" "$city" "$locale" "$hostname" "$username" "$password" &&
     arch-chroot /mnt ./chroot.sh "$region" "$city" "$locale" "$hostname" "$username" "$password" &&
     # Remove the chroot.sh file
     rm /mnt/chroot.sh
@@ -138,4 +139,5 @@ unmounting() {
     umount /mnt -R
 }
 
-prepare && selecting && partition && formatting && mounting && basing && fstabing && chrooting && unmounting
+#prepare && selecting && partition && formatting && mounting && basing && fstabing && chrooting && unmounting
+chrooting
