@@ -6,16 +6,20 @@ get_input() {
     returnvalue=${REPLY}
 }
 
-get_input "Enter your region:"
-region=$returnvalue
-get_input "Enter your city:"
-city=$returnvalue
-get_input "Enter your locale:"
-locale=$returnvalue
+#get_input "Enter your region:"
+#region=$returnvalue
+#get_input "Enter your city:"
+#city=$returnvalue
+#get_input "Enter your locale:"
+#locale=$returnvalue
+region="Europe"
+city="Brussels"
+locale="en_NZ"
 get_input "Enter your hostname:"
 hostname=$returnvalue
-get_input "Enter your username:"
-username=$returnvalue
+#get_input "Enter your username:"
+#username=$returnvalue
+username=norpie
 get_input "Enter your password:"
 password=$returnvalue
 
