@@ -49,6 +49,8 @@ default_packages() {
 }
 
 user_setup() {
+    echo $5
+    echo $6
     useradd $5
     echo "$5 ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
     echo -e "$6\n$6" | passwd $5
