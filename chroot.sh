@@ -1,7 +1,6 @@
 #!/bin/sh
 
 echo $@
-exit
 
 package_update() {
     pacman -Syu --noconfirm
