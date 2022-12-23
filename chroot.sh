@@ -47,12 +47,12 @@ default_packages() {
 }
 
 user_setup() {
-    useradd $5
-    echo "$5 ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-    echo -e "$6\n$6" | passwd $5
-    echo -e "$6\n$6" | passwd
-    echo -e "/bin/zsh" | chsh $5
-    echo -e "/bin/zsh" | chsh
+    useradd $5 &&
+    echo "$5 ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers &&
+    echo -e "$6\n$6" | passwd $5 &&
+    echo -e "$6\n$6" | passwd &&
+    echo -e "/bin/zsh" | chsh $5 &&
+    echo -e "/bin/zsh" | chsh &&
     mkdir -p /home
 }
 
@@ -74,5 +74,5 @@ boot_loader &&
 microcode_updates &&
 default_packages &&
 user_setup &&
-setup_dots &&
+#setup_dots &&
 exit
