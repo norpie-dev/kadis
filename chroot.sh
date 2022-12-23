@@ -19,7 +19,7 @@ time_zone() {
 localization() {
     echo "$1.UTF-8 UTF-8" >> /etc/locale.gen
     locale-gen
-    echo "LANG=$2.UTF-8" >> /etc/locale.conf
+    echo "LANG=$1.UTF-8" >> /etc/locale.conf
 }
 
 network_configuration() {
@@ -54,8 +54,6 @@ default_packages() {
 }
 
 user_setup() {
-    echo $1 &&
-    echo $2 &&
     useradd $1 &&
     echo "$1 ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers &&
     echo -e "$2\n$2" | passwd $1 &&
@@ -83,5 +81,5 @@ boot_loader &&
 microcode_updates &&
 default_packages &&
 user_setup $username $password &&
-setup_dots &&
+setup_dots $username &&
 exit
