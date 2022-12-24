@@ -61,15 +61,18 @@ partition_physical() {
           # confirm first sector
         +1G # confirm last sector
         y # confirm removal of signature
+        y # confirm removal of signature
         n # create new partition
           # confirm number 2
           # confirm first sector
         +50G # confirm last sector
         y # confirm removal of signature
+        y # confirm removal of signature
         n # create new partition
           # confirm number 3
           # confirm first sector
           # confirm last sector
+        y # confirm removal of signature
         y # confirm removal of signature
         w # save
 EOF
