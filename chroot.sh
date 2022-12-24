@@ -8,13 +8,13 @@ username="$5"
 password="$6"
 
 swap() {
-     if [[ $(sudo cat /proc/meminfo | grep VmallocTotal | awk '{print $2}') -lt 8388608 ]]; then
+    if [[ $(sudo cat /proc/meminfo | grep VmallocTotal | awk '{print $2}') -lt 8388608 ]]; then
          dd if=/dev/zero of=/swapfile bs=1M count=4096 status=progress
          chmod 0600 /swapfile
          mkswap -U clear /swapfile
          swapon /swapfile
          echo "/swapfile none swap defaults 0 0" > /etc/fstab
-     else
+    fi
 }
 
 package_update() {
