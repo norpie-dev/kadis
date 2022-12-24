@@ -1,0 +1,5 @@
+# Nabs
+
+## Quick install
+
+curl https://raw.githubusercontent.com/norpie-dev/nabs/beta/nabs.sh | bash
