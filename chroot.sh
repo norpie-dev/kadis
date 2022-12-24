@@ -7,6 +7,16 @@ hostname="$4"
 username="$5"
 password="$6"
 
+swap() {
+     if [[ $(sudo cat /proc/meminfo | grep VmallocTotal | awk '{print $2}') -lt 8388608 ]]; then
+         dd if=/dev/zero of=/swapfile bs=1M count=4096 status=progress
+         chmod 0600 /swapfile
+         mkswap -U clear /swapfile
+         swapon /swapfile
+         echo "/swapfile none swap defaults 0 0" > /etc/fstab
+     else
+}
+
 package_update() {
     pacman -Syu --noconfirm
 }
@@ -66,7 +76,7 @@ user_setup() {
 
 setup_dots() {
     cd /home
-    git clone https://github.com/norpie-dev/dots
+    git clone https://github.com/norpie-dev/dots --recursive
     mv dots $1
     cd $1
     mv ".git" ".dots"
@@ -74,6 +84,7 @@ setup_dots() {
     chown $1:$1 $1 -R
 }
 
+swap &&
 package_update &&
 time_zone $region $city &&
 localization $locale &&
