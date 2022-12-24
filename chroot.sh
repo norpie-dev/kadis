@@ -8,7 +8,7 @@ username="$5"
 password="$6"
 
 swap() {
-    if [[ $(sudo cat /proc/meminfo | grep VmallocTotal | awk '{print $2}') -lt 8388608 ]]; then
+    if [[ $(sudo cat /proc/meminfo | grep MemTotal | awk '{print $2}') -lt 8388608 ]]; then
          dd if=/dev/zero of=/swapfile bs=1M count=4096 status=progress
          chmod 0600 /swapfile
          mkswap -U clear /swapfile
