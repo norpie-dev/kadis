@@ -64,6 +64,11 @@ partition_physical() {
         n # create new partition
           # confirm number 2
           # confirm first sector
+        +50G # confirm last sector
+        y # confirm removal of signature
+        n # create new partition
+          # confirm number 3
+          # confirm first sector
           # confirm last sector
         y # confirm removal of signature
         w # save
@@ -104,7 +109,8 @@ formatting() {
     [[ "$TARGET_DEVICE" == *"nvme"* ]] && NVME="p"
     # Format Partitions
     mkfs.vfat -F32 "$TARGET_DEVICE"$NVME"1"
-    mkfs.ext4 -F "$TARGET_DEVICE"$NVME"2"
+    mkfs.ext4 "$TARGET_DEVICE"$NVME"2"
+    mkfs.ext4 "$TARGET_DEVICE"$NVME"3"
 }
 
 mounting() {
@@ -113,6 +119,8 @@ mounting() {
     mount "$TARGET_DEVICE"$NVME"2" "/mnt"
     mkdir -p "/mnt/boot"
     mount "$TARGET_DEVICE"$NVME"1" "/mnt/boot"
+    mkdir -p "/mnt/home"
+    mount "$TARGET_DEVICE"$NVME"3" "/mnt/home"
 }
 
 basing() {
