@@ -72,6 +72,8 @@ partition_physical() {
           # confirm last sector
         y # confirm removal of signature
         w # save
+        y # confirm removal of signature
+        y # confirm removal of signature
 EOF
 }
 
