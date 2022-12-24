@@ -13,7 +13,7 @@ swap() {
          chmod 0600 /swapfile
          mkswap -U clear /swapfile
          swapon /swapfile
-         echo "/swapfile none swap defaults 0 0" > /etc/fstab
+         echo "/swapfile none swap defaults 0 0" >> /etc/fstab
     fi
 }
 
