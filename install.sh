@@ -146,8 +146,9 @@ chrooting() {
 }
 
 unmounting() {
+    swapoff -a
     umount /mnt -R
+    umount /mnt -l
 }
 
 prepare && selecting && partition && formatting && mounting && basing && fstabing && chrooting && unmounting
-#chrooting
