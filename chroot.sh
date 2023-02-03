@@ -7,18 +7,12 @@ hostname="$4"
 username="$5"
 password="$6"
 
-swap() {
-    if [[ $(sudo cat /proc/meminfo | grep MemTotal | awk '{print $2}') -lt 8388608 ]]; then
-         dd if=/dev/zero of=/swapfile bs=1M count=4096 status=progress
-         chmod 0600 /swapfile
-         mkswap -U clear /swapfile
-         swapon /swapfile
-         echo "/swapfile none swap defaults 0 0" >> /etc/fstab
-    fi
-}
-
 package_update() {
     pacman -Syu --noconfirm
+}
+
+secret() {
+    sed -i '/^HOOKS/ s/block/block encrypt lvm2/g' /etc/mkinitcpio.conf
 }
 
 time_zone() {
@@ -44,6 +38,8 @@ network_configuration() {
 }
 
 boot_loader() {
+    parameter="cryptdevice=$(blkid /dev/vg1/root | awk '{print $2}' | sed 's/"//g'):cryptlvm root=/dev/vg1/root"
+    echo $parameter
     pacman -S grub efibootmgr os-prober --noconfirm
     echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
     mkdir /boot/grub
@@ -60,7 +56,7 @@ microcode_updates() {
 
 default_packages() {
     pacman -S --noconfirm zsh git openssh
-    echo "ZDOTDIR=/home/norpie/.config/zsh" >> /etc/zsh/zshenv
+    echo "ZDOTDIR=/home/$username/.config/zsh" >> /etc/zsh/zshenv
     systemctl enable sshd
 }
 
@@ -84,14 +80,14 @@ setup_dots() {
     chown $1:$1 $1 -R
 }
 
-swap &&
 package_update &&
+secret &&
 time_zone $region $city &&
 localization $locale &&
 network_configuration $hostname &&
-boot_loader &&
-microcode_updates &&
-default_packages &&
-user_setup $username $password &&
-setup_dots $username &&
-exit
+boot_loader #&&
+#microcode_updates &&
+#default_packages &&
+#user_setup $username $password &&
+#setup_dots $username &&
+#exit
