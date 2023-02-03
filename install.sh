@@ -71,26 +71,26 @@ formatting() {
     cryptsetup open "$TARGET_DEVICE" cryptlvm
     # Create volumes
     pvcreate /dev/mapper/cryptlvm
-    vgcreate SecretVolume /dev/mapper/cryptlvm
-    lvcreate -L 8G SecretVolume -n swap
-    lvcreate -L 32G SecretVolume -n root
-    lvcreate -l 100%FREE SecretVolume -n home
+    vgcreate vg1 /dev/mapper/cryptlvm
+    lvcreate -L 8G vg1 -n swap
+    lvcreate -L 32G vg1 -n root
+    lvcreate -l 100%FREE vg1 -n home
     # Format
     mkfs.vfat -F32 "$TARGET_DEVICE"$NVME"1"
-    mkfs.ext4 /dev/SecretVolume/root
-    mkfs.ext4 /dev/SecretVolume/home
+    mkfs.ext4 /dev/vg1/root
+    mkfs.ext4 /dev/vg1/home
     # Swap
-    mkswap /dev/SecretVolume/swap
+    mkswap /dev/vg1/swap
 }
 
 mounting() {
     [[ "$TARGET_DEVICE" == *"nvme"* ]] && NVME="p"
     # Mount Partitions
-    mount /dev/SecretVolume/root /mnt
-    mount --mkdir /dev/SecretVolume/home /mnt/home
+    mount /dev/vg1/root /mnt
+    mount --mkdir /dev/vg1/home /mnt/home
     mkdir -p "/mnt/boot"
     mount "$TARGET_DEVICE"$NVME"1" "/mnt/boot"
-    swapon /dev/SecretVolume/swap
+    swapon /dev/vg1/swap
 }
 
 basing() {
