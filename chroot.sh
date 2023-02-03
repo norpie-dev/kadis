@@ -13,6 +13,7 @@ package_update() {
 
 secret() {
     sed -i '/^HOOKS/ s/block/block encrypt lvm2/g' /etc/mkinitcpio.conf
+    mkinitcpio -P
 }
 
 time_zone() {
