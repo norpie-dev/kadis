@@ -68,7 +68,7 @@ formatting() {
     [[ "$TARGET_DEVICE" == *"nvme"* ]] && NVME="p"
     # Encrypt
     cryptsetup luksFormat "$TARGET_DEVICE"2
-    cryptsetup open "$TARGET_DEVICE" cryptlvm
+    cryptsetup open "$TARGET_DEVICE"2 cryptlvm
     # Create volumes
     pvcreate /dev/mapper/cryptlvm
     vgcreate vg1 /dev/mapper/cryptlvm
