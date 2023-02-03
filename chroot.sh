@@ -39,13 +39,13 @@ network_configuration() {
 }
 
 boot_loader() {
-    parameter="cryptdevice=$(blkid /dev/vg1/root | awk '{print $2}' | sed 's/"//g'):cryptlvm root=/dev/vg1/root"
-    echo $parameter
     pacman -S grub efibootmgr os-prober --noconfirm
     echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
     mkdir /boot/grub
     grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
     grub-mkconfig -o /boot/grub/grub.cfg
+    parameter="cryptdevice=$(blkid /dev/vg1/root | awk '{print $2}' | sed 's/"//g'):cryptlvm root=/dev/vg1/root"
+    echo $parameter
 }
 
 microcode_updates() {
