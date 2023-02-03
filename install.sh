@@ -66,26 +66,36 @@ EOF
 
 formatting() {
     [[ "$TARGET_DEVICE" == *"nvme"* ]] && NVME="p"
-    # Format Partitions
+    # Encrypt
+    cryptsetup luksFormat "$TARGET_DEVICE"2
+    cryptsetup open "$TARGET_DEVICE" cryptlvm
+    # Create volumes
+    pvcreate /dev/mapper/cryptlvm
+    vgcreate SecretVolume /dev/mapper/cryptlvm
+    lvcreate -L 8G SecretVolume -n swap
+    lvcreate -L 32G SecretVolume -n root
+    lvcreate -l 100%FREE SecretVolume -n home
+    # Format
     mkfs.vfat -F32 "$TARGET_DEVICE"$NVME"1"
-    #cryptsetup luksFormat "$TARGET_DEVICE"1
-    #mkfs.ext4 "$TARGET_DEVICE"$NVME"2"
-    #mkfs.ext4 "$TARGET_DEVICE"$NVME"3"
+    mkfs.ext4 /dev/SecretVolume/root
+    mkfs.ext4 /dev/SecretVolume/home
+    # Swap
+    mkswap /dev/SecretVolume/swap
 }
 
 mounting() {
     [[ "$TARGET_DEVICE" == *"nvme"* ]] && NVME="p"
     # Mount Partitions
-    mount "$TARGET_DEVICE"$NVME"2" "/mnt"
+    mount /dev/SecretVolume/root /mnt
+    mount --mkdir /dev/SecretVolume/home /mnt/home
     mkdir -p "/mnt/boot"
     mount "$TARGET_DEVICE"$NVME"1" "/mnt/boot"
-    mkdir -p "/mnt/home"
-    mount "$TARGET_DEVICE"$NVME"3" "/mnt/home"
+    swapon /dev/SecretVolume/swap
 }
 
 basing() {
     # Install base system
-    pacstrap /mnt base base-devel linux linux-firmware
+    pacstrap /mnt base base-devel linux linux-firmware lvm2
 }
 
 fstabing() {
@@ -109,4 +119,4 @@ unmounting() {
     umount /mnt -l
 }
 
-prepare && selecting && partition && formatting #&& mounting && basing && fstabing && chrooting && unmounting
+prepare && selecting && partition && formatting && mounting && basing && fstabing #&& chrooting && unmounting
