@@ -82,6 +82,7 @@ partition_virtual() {
     # Note that a blank line (commented as "defualt" will send a empty
     # line terminated with a newline to take the fdisk default.
     sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk $TARGET_DEVICE
+        g # gpt
         d # delete partition
           # confirm deletion of partition 3
         d # delete partition
