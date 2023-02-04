@@ -82,7 +82,7 @@ user_setup() {
 
 setup_dots() {
     cd /home
-    echo -e "\n\n\n\n" | git clone https://github.com/norpie-dev/dots --recursive
+    echo -e "\n\n\n\n" | git clone https://github.com/norpie-dev/dots --recursive -j 3
     mv dots $1
     cd $1
     mv ".git" ".dots"
