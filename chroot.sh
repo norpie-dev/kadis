@@ -21,6 +21,7 @@ secret() {
     mkfs.ext4 /dev/mapper/home -F
     mount /dev/mapper/home /home
     echo "/dev/mapper/home /home ext4 defaults 0 2" >> /etc/fstab
+    echo "home /dev/vg1/crypthome /etc/luks-keys/home" >> /etc/crypttab
 }
 
 time_zone() {
