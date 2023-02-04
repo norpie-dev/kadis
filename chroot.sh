@@ -22,6 +22,7 @@ secret() {
     mount /dev/mapper/home /home
     echo "/dev/mapper/home /home ext4 defaults 0 2" >> /etc/fstab
     echo "home /dev/vg1/crypthome /etc/luks-keys/home" >> /etc/crypttab
+    echo "swap /dev/vg1/cryptswap /dev/urandom swap,cipher=aes-xts-plain64,size=256" >> /etc/crypttab
 }
 
 time_zone() {
