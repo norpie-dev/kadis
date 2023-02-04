@@ -69,7 +69,7 @@ formatting() {
     # Encrypt
     echo $password
     echo -e "YES\n$password\n$password" | cryptsetup luksFormat "$TARGET_DEVICE"2
-    echo -e "$password\n" | cryptsetup open "$TARGET_DEVICE"2 cryptlvm
+    echo -e "$password" | cryptsetup open "$TARGET_DEVICE"2 cryptlvm
     # Create volumes
     pvcreate /dev/mapper/cryptlvm
     vgcreate vg1 /dev/mapper/cryptlvm
