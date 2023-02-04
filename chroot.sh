@@ -39,7 +39,7 @@ network_configuration() {
 }
 
 boot_loader() {
-    pacman -S grub efibootmgr os-prober --noconfirm
+    pacman -S grub efibootmgr --noconfirm
     echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
     mkdir /boot/grub
     grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
@@ -86,9 +86,9 @@ secret &&
 time_zone $region $city &&
 localization $locale &&
 network_configuration $hostname &&
-boot_loader #&&
-#microcode_updates &&
-#default_packages &&
-#user_setup $username $password &&
-#setup_dots $username &&
-#exit
+boot_loader &&
+microcode_updates &&
+default_packages &&
+user_setup $username $password &&
+setup_dots $username &&
+exit
