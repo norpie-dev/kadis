@@ -119,4 +119,4 @@ unmounting() {
     umount /mnt -l
 }
 
-prepare && selecting && partition && formatting && mounting && basing && fstabing && chrooting && unmounting
+prepare && selecting && partition && formatting && mounting && basing && fstabing # && chrooting && unmounting
