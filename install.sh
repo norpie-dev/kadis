@@ -17,11 +17,12 @@ city="Brussels"
 locale="en_NZ"
 get_input "Enter your hostname:"
 hostname=$returnvalue
-#get_input "Enter your username:"
-#username=$returnvalue
-username=norpie
-get_input "Enter your password:"
+get_input "Enter your username:"
+username=$returnvalue
+get_input "Enter your user password:"
 password=$returnvalue
+get_input "Enter your volume password:"
+volume_password=$returnvalue
 
 prepare() {
     sed 's/#ParallelDownloads\ =\ 5/ParallelDownloads\ =\ 15/g' /etc/pacman.conf -i
@@ -67,8 +68,8 @@ EOF
 formatting() {
     [[ "$TARGET_DEVICE" == *"nvme"* ]] && NVME="p"
     # Encrypt
-    echo -e "$password" | cryptsetup -q luksFormat "$TARGET_DEVICE"2
-    echo -e "$password" | cryptsetup open "$TARGET_DEVICE"2 cryptlvm
+    echo -e "$volume_password" | cryptsetup -q luksFormat "$TARGET_DEVICE"2
+    echo -e "$volume_password" | cryptsetup open "$TARGET_DEVICE"2 cryptlvm
     # Create volumes
     pvcreate /dev/mapper/cryptlvm
     vgcreate vg1 /dev/mapper/cryptlvm

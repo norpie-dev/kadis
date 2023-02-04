@@ -77,6 +77,7 @@ setup_dots() {
     mv dots $1
     cd $1
     mv ".git" ".dots"
+    mv .xinitrc xinitrc
     cd ..
     chown $1:$1 $1 -R
 }
