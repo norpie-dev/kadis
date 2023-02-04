@@ -14,6 +14,13 @@ package_update() {
 secret() {
     sed -i '/^HOOKS/ s/block/block encrypt lvm2/g' /etc/mkinitcpio.conf
     mkinitcpio -P
+    mkdir -m 700 /etc/luks-keys
+    dd if=/dev/random of=/etc/luks-keys/home bs=1 count=256 status=progress
+    echo "$password" | cryptsetup -q luksFormat -v /dev/vg1/crypthome /etc/luks-keys/home
+    echo "$password" | cryptsetup -d /etc/luks-keys/home open /dev/vg1/crypthome home
+    mkfs.ext4 /dev/mapper/home -F
+    mount /dev/mapper/home /home
+    echo "/dev/mapper/home /home ext4 defaults 0 2" >> /etc/fstab
 }
 
 time_zone() {
@@ -73,7 +80,7 @@ user_setup() {
 
 setup_dots() {
     cd /home
-    git clone https://github.com/norpie-dev/dots --recursive
+    echo -e "\n\n\n\n" | git clone https://github.com/norpie-dev/dots --recursive
     mv dots $1
     cd $1
     mv ".git" ".dots"

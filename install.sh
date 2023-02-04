@@ -33,6 +33,7 @@ selecting() {
     TARGET=${REPLY}
     TARGET_DEVICE="/dev/$TARGET"
 }
+
 partition() {
     # Partitioning of the disk
     # to create the partitions programatically (rather than manually)
@@ -78,7 +79,6 @@ formatting() {
     # Format
     mkfs.vfat -F32 "$TARGET_DEVICE"$NVME"1"
     mkfs.ext4 /dev/vg1/root -F
-    mkfs.ext4 /dev/vg1/home -F
     # Swap
     mkswap /dev/vg1/swap
 }
@@ -87,7 +87,6 @@ mounting() {
     [[ "$TARGET_DEVICE" == *"nvme"* ]] && NVME="p"
     # Mount Partitions
     mount /dev/vg1/root /mnt
-    mount --mkdir /dev/vg1/home /mnt/home
     mkdir -p "/mnt/boot"
     mount "$TARGET_DEVICE"$NVME"1" "/mnt/boot"
     swapon /dev/vg1/swap
