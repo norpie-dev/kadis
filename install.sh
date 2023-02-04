@@ -77,8 +77,8 @@ formatting() {
     lvcreate -l 100%FREE vg1 -n home
     # Format
     mkfs.vfat -F32 "$TARGET_DEVICE"$NVME"1"
-    mkfs.ext4 /dev/vg1/root
-    mkfs.ext4 /dev/vg1/home
+    mkfs.ext4 /dev/vg1/root -F
+    mkfs.ext4 /dev/vg1/home -F
     # Swap
     mkswap /dev/vg1/swap
 }
