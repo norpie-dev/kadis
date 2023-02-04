@@ -77,7 +77,7 @@ formatting() {
     lvcreate -L 32G vg1 -n root
     lvcreate -l 100%FREE vg1 -n home
     # Format
-    mkfs.vfat -F32 "$TARGET_DEVICE"$NVME"1"
+    mkfs.ext4 "$TARGET_DEVICE"$NVME"1"
     mkfs.ext4 /dev/vg1/root -F
     mkfs.ext4 /dev/vg1/home -F
     # Swap
@@ -109,7 +109,7 @@ chrooting() {
     cp chroot.sh /mnt/chroot.sh &&
     # Enter chroot
     #echo "$region" "$city" "$locale" "$hostname" "$username" "$password" &&
-    arch-chroot /mnt ./chroot.sh "$region" "$city" "$locale" "$hostname" "$username" "$password" &&
+    arch-chroot /mnt ./chroot.sh "$region" "$city" "$locale" "$hostname" "$username" "$password" "$TARGET_DEVICE$NVME" &&
     # Remove the chroot.sh file
     rm /mnt/chroot.sh
 }

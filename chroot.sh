@@ -6,6 +6,7 @@ locale="$3"
 hostname="$4"
 username="$5"
 password="$6"
+device="$7"
 
 package_update() {
     pacman -Syu --noconfirm
@@ -43,7 +44,7 @@ boot_loader() {
     echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
     mkdir /boot/grub
     grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
-    parameter="cryptdevice=$(blkid /dev/vda2 | awk '{print $2}' | sed 's/"//g'):cryptlvm root=/dev/vg1/root"
+    parameter="cryptdevice=$(blkid "$device"2 | awk '{print $2}' | sed 's/"//g'):cryptlvm root=/dev/vg1/root"
     sed -i "s,GRUB_CMDLINE_LINUX=\"\",GRUB_CMDLINE_LINUX=\"$parameter\"," /etc/default/grub
     grub-mkconfig -o /boot/grub/grub.cfg
 }
