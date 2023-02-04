@@ -100,7 +100,7 @@ basing() {
 
 fstabing() {
     # Generate fstab
-    genfstab -U /mnt >> /mnt/etc/fstab
+    genfstab /mnt > /mnt/etc/fstab
 }
 
 chrooting() {
