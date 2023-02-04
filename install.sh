@@ -67,7 +67,7 @@ EOF
 formatting() {
     [[ "$TARGET_DEVICE" == *"nvme"* ]] && NVME="p"
     # Encrypt
-    echo -e "$password\n$password" | cryptsetup luksFormat "$TARGET_DEVICE"2
+    echo -e "YES\n$password\n$password" | cryptsetup luksFormat "$TARGET_DEVICE"2
     echo -e "$password\n" | cryptsetup open "$TARGET_DEVICE"2 cryptlvm
     # Create volumes
     pvcreate /dev/mapper/cryptlvm
