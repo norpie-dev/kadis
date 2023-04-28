@@ -6,6 +6,8 @@ get_input() {
     returnvalue=${REPLY}
 }
 
+# Hello
+
 #get_input "Enter your region:"
 #region=$returnvalue
 #get_input "Enter your city:"
