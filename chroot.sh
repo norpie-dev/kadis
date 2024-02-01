@@ -74,7 +74,7 @@ user_setup() {
 
 setup_dots() {
     cd /home
-    git clone https://github.com/norpie-dev/dots
+    git clone https://github.com/norpie/dots
     mv dots $1
     cd $1
     mv ".git" ".dots"
