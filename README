@@ -2,4 +2,4 @@
 
 ## Quick install
 
-curl https://raw.githubusercontent.com/norpie/nabs/main/nabs.sh | bash
+curl -sL nabs.norpie.dev | bash
