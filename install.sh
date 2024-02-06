@@ -15,4 +15,8 @@ make_user() {
     sed -i 's/USERNAME/$username/g' user_credentials.json
 }
 
-make_user && sudo archinstall --config user_configuration.json --creds user_credentials.json
+prepare() {
+    sed 's/#ParallelDownloads\ =\ 5/ParallelDownloads\ =\ 15/g' /etc/pacman.conf -i
+}
+
+make_user && prepare && sudo archinstall --config user_configuration.json --creds user_credentials.json
