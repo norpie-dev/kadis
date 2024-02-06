@@ -5,7 +5,7 @@ HOME=$(find /home -maxdepth 1 -mindepth 1 -type d | awk 'NR == 1')
 USERNAME=$(basename $HOME)
 
 install_aur_package() {
-    cat $PACKAGES_FILE | xargs yay -S --noconfirm --needed
+    cat $PACKAGES_FILE | xargs sudo -U $USERNAME yay -S --noconfirm --needed
 }
 
 change_shell() {
@@ -25,7 +25,8 @@ install_yay() {
     YAY_REPO="https://aur.archlinux.org/yay.git"
     git clone $YAY_REPO
     cd yay
-    makepkg -si --noconfirm
+    change_perms
+    sudo -u $USERNAME makepkg -si --noconfirm
     cd ..
     rm yay -rf
     cd /
@@ -36,10 +37,13 @@ change_perms() {
 }
 
 complete_install() {
-    install_aur_packages
+    pacman -Syu --noconfirm
+    pacman -S --noconfirm git
+    echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
     change_shell
     install_dots
     install_yay
+    install_aur_packages
     change_perms
 }
 
