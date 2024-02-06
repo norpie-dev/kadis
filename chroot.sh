@@ -11,7 +11,7 @@ make_user() {
     username=$returnvalue
     get_input "Enter your password"
     password=$returnvalue
-    # TODO: Change user_configuration.json
+    # TODO: Change user_credentials.json to your own credentials
 }
 
-make_user && archinstall --creds user_configuration.json --config
+make_user && sudo archinstall --config user_configuration.json --creds user_credentials.json
