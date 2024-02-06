@@ -11,7 +11,8 @@ make_user() {
     username=$returnvalue
     get_input "Enter your password"
     password=$returnvalue
-    # TODO: Change user_credentials.json to your own credentials
+    sed -i 's/PASSWORD/$password/g' user_credentials.json
+    sed -i 's/USERNAME/$username/g' user_credentials.json
 }
 
 make_user && sudo archinstall --config user_configuration.json --creds user_credentials.json
